@@ -1,7 +1,12 @@
 # py-imdb-api-dev-client
 
-A Client for imdbapi.dev REST services
+A python client for [imdbapi.dev](https://imdbapi.dev/) REST services
 
+## Links
+
+* https://imdbapi.dev/
+  * https://v2.imdbapi.dev/imdbapi.swagger.yaml
+* https://swagger.io/tools/swagger-codegen/
 
 ## Generate
 
@@ -19,24 +24,39 @@ docker run --rm -it --user $user_id:$group_id \
     --api-package imdbapi \
     -l python
 
+# Various fixes for `ModuleNotFoundError: No module named 'imdbapi'` errors
 sed -e 's/from imdbapi/from py_imdb_api_dev_client.imdbapi/g' -i py_imdb_api_dev_client/py_imdb_api_dev_client/__init__.py 
 sed -e 's/from imdbapi/from py_imdb_api_dev_client.imdbapi/g' -i py_imdb_api_dev_client/py_imdb_api_dev_client/imdbapi/__init__.py
+
 ```
 
 ## Install
 
 ```bash
+# From release (must resolve manually the requirements)
+wget https://github.com/moz667/py-imdb-api-dev-client/releases/download/1.0.0/py-imdb-api-dev-client_1.0.0.zip
+unzip py-imdb-api-dev-client_1.0.0.zip
 cd py_imdb_api_dev_client/
 python setup.py install
+
+# Or with pip:
+pip install git+https://github.com/moz667/py-imdb-api-dev-client@tags/1.0.0#subdirectory=py-imdb-api-dev-client
 ```
 
-## Test
+## Configure as requirement
+
+Im too lazy to read and mantain a pip package so...
+
+```
+py-imdb-api-dev-client @ git+https://github.com/moz667/py-imdb-api-dev-client@tags/1.0.0#subdirectory=py-imdb-api-dev-client
+```
+
+## Test & samples
 
 ```shell
 $ python
 # >>> from py_imdb_api_dev_client.imdbapi.title_api import TitleApi
-# >>> title_api = TitleApi()
-# >>> title_api.i_mdb_api_service_get_title('tt0168122')
+# >>> TitleApi().i_mdb_api_service_get_title('tt0168122')
 # {'end_year': None,
 #  'genres': ['Biography', 'Drama', 'History'],
 #  'id': 'tt0168122',
@@ -52,3 +72,8 @@ $ python
 #  'start_year': 1999,
 #  'type': 'tvMovie'}
 ```
+
+## TODO
+
+* [ ] Register a pip package
+* [ ] Create a facade to simplify (swagger codegen its a bit "intense".)
