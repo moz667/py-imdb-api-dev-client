@@ -23,24 +23,19 @@ docker run --rm -it --user $user_id:$group_id \
     -o /py-imdb-api-dev-client -c /imdbapi.swagger.config.json \
     --api-package imdbapi \
     -l python
-
-# Various fixes for `ModuleNotFoundError: No module named 'imdbapi'` errors
-sed -e 's/from imdbapi/from py_imdb_api_dev_client.imdbapi/g' -i py_imdb_api_dev_client/py_imdb_api_dev_client/__init__.py 
-sed -e 's/from imdbapi/from py_imdb_api_dev_client.imdbapi/g' -i py_imdb_api_dev_client/py_imdb_api_dev_client/imdbapi/__init__.py
-
 ```
 
 ## Install
 
 ```bash
 # From release (must resolve manually the requirements)
-wget https://github.com/moz667/py-imdb-api-dev-client/releases/download/1.0.0/py-imdb-api-dev-client_1.0.0.zip
-unzip py-imdb-api-dev-client_1.0.0.zip
+wget https://github.com/moz667/py-imdb-api-dev-client/releases/download/2.7.12/py-imdb-api-dev-client_2.7.12.zip
+unzip py-imdb-api-dev-client_2.7.12.zip
 cd py_imdb_api_dev_client/
 python setup.py install
 
 # Or with pip:
-pip install git+https://github.com/moz667/py-imdb-api-dev-client@tags/1.0.0#subdirectory=py-imdb-api-dev-client
+pip install git+https://github.com/moz667/py-imdb-api-dev-client@tags/2.7.12#subdirectory=py-imdb-api-dev-client
 ```
 
 ## Configure as requirement
@@ -48,7 +43,7 @@ pip install git+https://github.com/moz667/py-imdb-api-dev-client@tags/1.0.0#subd
 Im too lazy to read and mantain a pip package so...
 
 ```
-py-imdb-api-dev-client @ git+https://github.com/moz667/py-imdb-api-dev-client@tags/1.0.0#subdirectory=py-imdb-api-dev-client
+py-imdb-api-dev-client @ git+https://github.com/moz667/py-imdb-api-dev-client@tags/2.7.12#subdirectory=py-imdb-api-dev-client
 ```
 
 ## Test & samples
@@ -71,6 +66,28 @@ $ python
 #  'runtime_minutes': 95,
 #  'start_year': 1999,
 #  'type': 'tvMovie'}
+```
+
+## Generate a release
+
+```bash
+# 1. Set TAG version
+TAG="<version-tagged>"
+
+# 2. Create a temporary directory
+cd /tmp
+mkdir /tmp/release-$TAG
+cd /tmp/release-$TAG
+
+# 3. Pull sources
+git clone --depth 1 --branch $TAG https://github.com/moz667/py-imdb-api-dev-client .
+
+# 4. Zip relase file
+zip -r py-imdb-api-dev-client_$TAG.zip py-imdb-api-dev-client
+
+# 5. Goto github and add manually the new relases
+
+# 6. Delete `/tmp/release-$TAG`
 ```
 
 ## TODO

@@ -1,0 +1,11 @@
+# ImdbapiMoney
+
+## Properties
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**amount** | **str** | The amount of money in the box office. | [optional] 
+**currency** | **str** | The currency of the money. | [optional] 
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+
